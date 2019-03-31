@@ -1,5 +1,5 @@
-function clicker(mountPoint, id) {
-  console.log("clicker " + id);
+function clicker(mountPoint, props) {
+  console.log("clicker " + props.id);
   const state = {
     count: 0
   };
@@ -14,13 +14,13 @@ function clicker(mountPoint, id) {
   }
 
   function renderClicker() {
-    console.log("renderClicker" + id);
+    console.log("renderClicker" + props.id);
     document.getElementById(mountPoint).innerHTML = `
-            <div>Clicker ${id}</div>
+            <div>Clicker ${props.id}</div>
             <div>Clicks: ${state.count}</div>
-            <button id=${id}>Click Me!</button>
+            <button id=${props.id}>Click Me!</button>
         `;
-    document.getElementById(id).addEventListener("click", handleClick);
+    document.getElementById(props.id).addEventListener("click", handleClick);
   }
 
   return renderClicker;
@@ -29,8 +29,8 @@ function clicker(mountPoint, id) {
 function app(mountPoint) {
   console.log("app");
 
-  const renderClicker1 = clicker("clicker1", "1");
-  const renderClicker2 = clicker("clicker2", "2");
+  const renderClicker1 = clicker("clicker1", { id: "1" });
+  const renderClicker2 = clicker("clicker2", { id: "2" });
 
   function renderApp() {
     console.log("renderApp");
