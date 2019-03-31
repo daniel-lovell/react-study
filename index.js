@@ -1,4 +1,4 @@
-function clicker(render, mountPoint, id) {
+function clicker(mountPoint, id) {
   console.log("clicker " + id);
   const state = {
     count: 0
@@ -26,11 +26,11 @@ function clicker(render, mountPoint, id) {
   return renderClicker;
 }
 
-function app(render, mountPoint) {
+function app(mountPoint) {
   console.log("app");
 
-  const renderClicker1 = clicker(renderApp, "clicker1", "1");
-  const renderClicker2 = clicker(renderApp, "clicker2", "2");
+  const renderClicker1 = clicker("clicker1", "1");
+  const renderClicker2 = clicker("clicker2", "2");
 
   function renderApp() {
     console.log("renderApp");
@@ -46,7 +46,7 @@ function app(render, mountPoint) {
   return renderApp;
 }
 
-const renderApp = app(render, "root");
+const renderApp = app("root");
 
 function render() {
   console.log("render");
