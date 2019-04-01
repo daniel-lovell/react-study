@@ -11,7 +11,6 @@ function Clicker(mountPoint, props) {
   }
 
   function handleClick(e) {
-    console.log(e);
     setState({ count: state.count + 1, eventElement: e.target.id });
   }
 
