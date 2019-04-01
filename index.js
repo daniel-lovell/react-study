@@ -1,7 +1,8 @@
 function Clicker(mountPoint, props) {
   console.log("Clicker" + props.id);
   const state = {
-    count: 0
+    count: 0,
+    eventElement: null
   };
 
   function setState(newState) {
@@ -9,8 +10,9 @@ function Clicker(mountPoint, props) {
     render();
   }
 
-  function handleClick() {
-    setState({ count: state.count + 1 });
+  function handleClick(e) {
+    console.log(e);
+    setState({ count: state.count + 1, eventElement: e.target.id });
   }
 
   function render() {
@@ -21,6 +23,9 @@ function Clicker(mountPoint, props) {
         <button id=${props.id}>Click Me!</button>
     `;
     document.getElementById(props.id).addEventListener("click", handleClick);
+    if (state.eventElement) {
+      document.getElementById(state.eventElement).focus();
+    }
   }
 
   return render;
