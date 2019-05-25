@@ -25,11 +25,13 @@ function TodoItem() {
       );
     }
 
-    document.getElementById(mountPoint).innerHTML = `
+    const element = document.getElementById(mountPoint);
+    element.innerHTML = `
       <input id=${mountPoint + "Done"} type="checkbox" ${
       state.done ? "checked" : ""
     }>${props.item}
     `;
+    element.style.textDecoration = !state.done ? "none" : "line-through";
     document
       .getElementById(mountPoint + "Done")
       .addEventListener("click", handleClick);
