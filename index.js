@@ -1,4 +1,67 @@
-// Todo: Lists, Callback Props
+// Todo: Lists, Conditional Rendering
+
+function TodoItem() {
+  console.log("TodoListApp");
+
+  const state = {
+    done: false,
+    eventElement: null
+  };
+
+  function setState(state, newState, mountPoint, props) {
+    Object.assign(state, newState);
+    render(mountPoint, props);
+  }
+
+  function render(mountPoint, props) {
+    console.log("todoItem", mountPoint);
+
+    function handleClick(e) {
+      setState(
+        state,
+        { done: !state.done, eventElement: e.target.id },
+        mountPoint,
+        props
+      );
+    }
+
+    document.getElementById(mountPoint).innerHTML = `
+      <input id=${mountPoint + "Done"} type="checkbox" ${
+      state.done ? "checked" : ""
+    }>${props.item}
+    `;
+    document
+      .getElementById(mountPoint + "Done")
+      .addEventListener("click", handleClick);
+    if (state.eventElement) {
+      document.getElementById(state.eventElement).focus();
+    }
+  }
+
+  return render;
+}
+
+function TodoListApp(mountPoint) {
+  console.log("TodoListApp");
+
+  const todoItem = TodoItem("todoItem");
+
+  let list = ["Go to store", "Go to bed", "Eat dinner"];
+
+  function render(props) {
+    console.log("todoListApp");
+
+    document.getElementById(mountPoint).innerHTML = `
+      <ul>${list
+        .map((_item, index) => `<li id=${mountPoint + index}></li>`)
+        .reduce((accum, curr) => accum + curr)}
+      </ul>
+    `;
+    list.forEach((item, index) => todoItem(mountPoint + index, { item: item }));
+  }
+
+  return render;
+}
 
 function ClickerLifted(mountPoint, props) {
   console.log("ClickerLifted" + props.id);
@@ -140,22 +203,26 @@ function App(mountPoint) {
 
   const clickerIndividualApp = ClickerIndividualApp("clickerIndividualApp");
   const clickerLiftedApp = ClickerLiftedApp("clickerLiftedApp");
+  const todoListApp = TodoListApp("todoListApp");
 
-  function render() {
+  function render(props) {
     console.log("app");
     document.getElementById(mountPoint).innerHTML = `
       <div id="clickerIndividualApp"></div>
       <hr />
       <div id="clickerLiftedApp"></div>
+      <hr />
+      <div id="todoListApp"></div>
     `;
     clickerIndividualApp();
     clickerLiftedApp();
+    todoListApp();
   }
 
   return render;
 }
 
-const app = App("root");
+const app = App("app");
 
 function render() {
   console.log("render");
